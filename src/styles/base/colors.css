@@ -1,0 +1,7 @@
+.text-danger {
+  color: var(--danger-text) !important;
+}
+
+.text-success {
+  color: var(--success-text) !important;
+}
