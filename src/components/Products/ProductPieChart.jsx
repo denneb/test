@@ -44,21 +44,7 @@ export const PieChart = () => {
               dataLabels: {
                 enabled: false,
               },
-              responsive: [
-                {
-                  breakpoint: 1000,
-                  options: {
-                    plotOptions: {
-                      bar: {
-                        horizontal: false,
-                      },
-                    },
-                    legend: {
-                      position: 'bottom',
-                    },
-                  },
-                },
-              ],
+
               pie: {},
               colors: ['#D6215B', '#FF7A00', '#7530B2', '#23B794', '#006FFF'],
             }}
