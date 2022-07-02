@@ -25,7 +25,7 @@ export const PieChart = () => {
 
   return (
     <>
-      <h3>Presence Share by Product</h3>
+      <h3 style={{ backgroundColor: '#eef6ff' }}>Presence Share by Product</h3>
       {isLoading && (
         <div className="text-center">
           <MdOutlineRefresh /> Loading data, please wait...

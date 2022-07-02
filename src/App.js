@@ -17,16 +17,10 @@ function App() {
           justifyContent: 'space-around',
         }}
       >
-        <div
-          className="pd-2"
-          style={{ width: '51vw', backgroundColor: '#fff' }}
-        >
+        <div className="" style={{ width: '51vw', backgroundColor: '#fff' }}>
           <LineChart />
         </div>
-        <div
-          className="pd-2"
-          style={{ width: '41vw', backgroundColor: '#fff' }}
-        >
+        <div className="" style={{ width: '41vw', backgroundColor: '#fff' }}>
           <PieChart />
         </div>
       </div>

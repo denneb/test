@@ -111,7 +111,7 @@ export const LineChart = () => {
 
   return (
     <>
-      <h3>Price Evolution</h3>
+      <h3 style={{ backgroundColor: '#eef6ff' }}>Price Evolution</h3>
       {isLoading && (
         <div className="text-center">
           <MdOutlineRefresh /> Loading data, please wait...
