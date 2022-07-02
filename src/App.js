@@ -15,15 +15,15 @@ function App() {
           alignContent: 'space-evenly',
         }}
       >
-        <div className="pd-2" style={{ width: '50%' }}>
+        <div className="pd-2" style={{ width: '52vw' }}>
           <LineChart />
         </div>
-        <div className="pd-2">
+        <div className="pd-2" style={{ width: '44vw' }}>
           <PieChart />
         </div>
       </div>
 
-      <div>
+      <div className="mt-4">
         <ProductsGrid title={'Comparative Analysis'} />
       </div>
     </>

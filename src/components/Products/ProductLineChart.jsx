@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import Chart from 'react-apexcharts';
 import _ from 'lodash';
-import { useFetch } from '../../hooks/useFetch';
+import moment from 'moment';
 
 import { MdOutlineRefresh } from 'react-icons/md';
 import { MdError } from 'react-icons/md';
+import { getDates } from '../../helpers/dates';
+
+import { useFetch } from '../../hooks/useFetch';
 
 export const LineChart = () => {
   const { data, isLoading, hasError } = useFetch('/price-evolution-chart');
@@ -15,20 +18,66 @@ export const LineChart = () => {
     if (data) {
       const groupDate = _.groupBy(data, 'dateExtraction');
 
-      const d = Object.keys(groupDate);
+      let result = _.groupBy(data, 'name');
+      const maxDate = new Date(
+        Math.max(
+          ...data.map((element) => {
+            return new Date(element.dateExtraction);
+          })
+        )
+      );
 
-      setDays(d.sort());
+      const minDate = new Date(
+        Math.min(
+          ...data.map((element) => {
+            return new Date(element.dateExtraction);
+          })
+        )
+      );
 
-      const result = _.groupBy(data, 'name');
+      const dates = getDates(minDate, maxDate);
+      Object.keys(result).forEach((key) => {
+        dates.forEach((element, index) => {
+          const date = result[key].find(
+            (date) =>
+              element.getTime() === new Date(date.dateExtraction).getTime()
+          );
+          if (date === undefined) {
+            var datestring =
+              ('0' + (element.getMonth() + 1).toString()).substr(-2) +
+              '/' +
+              ('0' + element.getDate().toString()).substr(-2) +
+              '/' +
+              element.getFullYear().toString().substr(2);
+            const item = {
+              sku: result[key][0].sku,
+              name: key,
+              price: null,
+              dateExtraction: datestring,
+            };
+            data.splice(index, 0, item);
+            console.log(date);
+          }
+        });
+      });
 
+      result = _.groupBy(data, 'name');
+      let d = Object.keys(groupDate).sort();
+      let d2 = d.map((dt) => {
+        return new moment(new Date(dt), 'MM-DD-YYYY').format('MMM DD');
+      });
+      console.log(d2);
+      setDays(d2);
       const products = Object.keys(result);
 
       products.forEach((key) => {
         const p = result[key].map((item) => {
           return item.price;
         });
-        const itemExiste = seriesData.current.find((item) => item.name === key);
-        !itemExiste && seriesData.current.push({ name: key, data: p });
+
+        const itemExists = seriesData.current.find((item) => item.name === key);
+
+        !itemExists && seriesData.current.push({ name: key, data: p });
       });
     }
   }, [data]);
@@ -48,10 +97,7 @@ export const LineChart = () => {
     stroke: {
       curve: 'smooth',
     },
-    title: {
-      text: 'Product Trends by Month',
-      align: 'left',
-    },
+
     grid: {
       row: {
         colors: ['#f3f3f3', '#fff'],
@@ -65,7 +111,7 @@ export const LineChart = () => {
 
   return (
     <>
-      <h3>Presence Share by Product</h3>
+      <h3>Price Evolution</h3>
       {isLoading && (
         <div className="text-center">
           <MdOutlineRefresh /> Loading data, please wait...
@@ -77,12 +123,7 @@ export const LineChart = () => {
         </span>
       )}
       <div style={{ backgroundColor: '#fff' }}>
-        <Chart
-          type="line"
-          series={seriesData.current}
-          options={options}
-          width="600"
-        />
+        <Chart type="line" series={seriesData.current} options={options} />
       </div>
     </>
   );

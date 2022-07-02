@@ -6,7 +6,13 @@ export const MainLayout = ({ children }) => {
       <TopBar />
 
       {/**Container de info*/}
-      <div style={{ paddingLeft: '28px', paddingRight: '28px' }}>
+      <div
+        style={{
+          paddingLeft: '28px',
+          paddingRight: '28px',
+          paddingTop: '20px',
+        }}
+      >
         {children}
       </div>
     </div>

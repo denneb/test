@@ -37,24 +37,34 @@ export const PieChart = () => {
         </span>
       )}
       {data && labels && (
-        <div style={{ backgroundColor: '#fff' }} className="donut">
+        <div style={{ backgroundColor: '#fff' }} className="">
           <Chart
             options={{
               labels,
               dataLabels: {
                 enabled: false,
               },
-              grid: {
-                row: {
-                  colors: ['#fff', '#fff'],
-                  opacity: 0.5,
+              responsive: [
+                {
+                  breakpoint: 1000,
+                  options: {
+                    plotOptions: {
+                      bar: {
+                        horizontal: false,
+                      },
+                    },
+                    legend: {
+                      position: 'bottom',
+                    },
+                  },
                 },
-              },
+              ],
+              pie: {},
               colors: ['#D6215B', '#FF7A00', '#7530B2', '#23B794', '#006FFF'],
             }}
             series={series}
             type="pie"
-            width="500"
+            scale="0.4"
           />
         </div>
       )}
